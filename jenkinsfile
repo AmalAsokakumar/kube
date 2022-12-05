@@ -15,7 +15,7 @@ pipeline{
                   sh 'tar -czvf  myapp-${build_id}.tgz *'
             }
         }
-        stege('pushing the file to git hub'){
+        stage('pushing the file to git hub'){
             steps{
                 echo"pushing the artifact to git hub"
             }
