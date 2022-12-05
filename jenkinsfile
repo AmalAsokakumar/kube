@@ -1,0 +1,13 @@
+pipeline{ 
+    agent any
+    tools {
+        maven 'my-mvn'
+    }
+    stages{
+        stage('fetching code'){
+            steps {
+                sh 'git branch:devops, credentialsId: 'git-cred', url: '
+            }
+        }
+    }
+}
