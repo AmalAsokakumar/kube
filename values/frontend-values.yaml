@@ -1,6 +1,6 @@
 appName: currencyservice
 appImage: gcr.io/google-samples/microservices-demo/currencyservice
-appVersion: v0.2.3
+appVersion: v0.4.2
 appReplicas: 2
 containerPort: 8080
 containerEnvVar:
@@ -16,7 +16,7 @@ containerEnvVar:
   value: "recommendationservice:8080"
 - name: SHIPPING_SERVICE_ADDR
   value: "shippingservice:50051"
-- name : CHECK_SERVICE_ADDR
+- name: CHECK_SERVICE_ADDR
   value: "checkoutservice:5050"
 - name: PAYMENT_SERVICE_ADDR
   value: "paymentservice:50051"
