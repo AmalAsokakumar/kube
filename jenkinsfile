@@ -6,8 +6,20 @@ pipeline{
     stages{
         stage('fetching code'){
             steps {
-                sh 'git branch:devops, credentialsId: 'git-cred', url: '
+                git branch:'devops', credentialsId: 'git-cred', url:'https://github.com/comrider/kube.git'
+                echo 'cloninig git repository'
             }
+        }
+        stage('archieving the files '){
+            steps{
+                  sh 'tar -czvf  myapp-${build_id}.tgz *'
+            }
+        }
+        stege('pushing the file to git hub'){
+            steps{
+                echo"pushing the artifact to git hub"
+            }
+
         }
     }
 }
