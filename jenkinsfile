@@ -12,10 +12,13 @@ pipeline{
         }
         stage('archieving the files '){
             steps{
+                  sh 'rm -fr *.tgz'
                   // not considering these now .....
                   //echo "building the dockerimage..."
                   //sh 'docker build -t comrider/nginx_file .'
-                  sh 'tar -czvf  myapp:${BUILD_NUMBER}.tgz --exclude=*.tgz  *'
+                  sh 'tar -czvf  myapp:${BUILD_NUMBER}.tgz *'
+                  sh 'ls -lrt'
+
             }
         }
         stage('pushing the file to git hub'){
