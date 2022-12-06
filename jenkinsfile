@@ -15,18 +15,30 @@ pipeline{
                   // not considering these now .....
                   //echo "building the dockerimage..."
                   //sh 'docker build -t comrider/nginx_file .'
-                  sh 'tar -czvf  myapp-${BUILD_NUMBER}.tgz *'
+                  sh 'tar -czvf  myapp:${BUILD_NUMBER}.tgz --exclude=*.tgz  *'
             }
         }
         stage('pushing the file to git hub'){
             steps{
-                echo"pushing the artifact to git hub"
-                sshagent (credentials: ['git-token']) {
-                    // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
-                    sh("(git add *.tgz)")
-                    sh("(git commit -m 'file added ')")
-                    sh('(git push git@github.com:comrider/DevOps.git)')
-                }
+                cleanWs() //clean workspace 
+                    script{
+                            withCredentials([usernamePassword(credentialsId: 'git-pass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                                def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+                                sh "git config user.email jenkins@gmail.com"
+                                sh "git config user.name jenkins"
+                                sh "git add myapp:${env.BUILD_NUMBER}.tgz"
+                                sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
+                                sh "git push https://${GIT_USERNAME}:${encodedPassword}@git@github.com:comrider/"
+                                
+                            }
+                    }
+                // echo"pushing the artifact to git hub"
+                // sshagent (credentials: ['git-token']) {
+                //     // "git add", "git commit", and "git push" your changes here. You may have to cd into the repo directory like I did here because the current working directory is the parent directory to the directory that contains the actual repo, created by "git clone" earlier in this Jenkinsfile.
+                //     sh("(git add *.tgz)")
+                //     sh("(git commit -m 'file added ')")
+                //     sh('(git push git@github.com:comrider/DevOps.git)')
+                //}
             }
         }
     }
