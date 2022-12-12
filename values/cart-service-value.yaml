@@ -1,7 +1,7 @@
 appName:  cartservice
 appImage: gcr.io/google-samples/microservices-demo/cartservice
 appVersion: v0.4.2
-appReplicas: 2
+appReplicas: 1
 containerPort: 7070
 containerEnvVar:
 - name: PORT 

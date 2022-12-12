@@ -1,0 +1,25 @@
+
+# kubectl create -d pod-definition.yml 
+
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: simple-wehapp-color
+  labels: 
+    name : simple-wehapp-color
+spec: 
+ containers:
+  - name: simple-wehapp-color
+    image: simpe-webapp-color
+    ports: 
+      - containerPort: 8080
+    envFrom: 
+      - configMapRef:
+        name: app-config 
+
+
+
+
+---
+
+volumes: 

@@ -16,22 +16,21 @@ pipeline{
                   // not considering these now .....
                   //echo "building the dockerimage..."
                   //sh 'docker build -t comrider/nginx_file .'
-                  sh 'tar -czvf  myapp:${BUILD_NUMBER}.tgz *'
+                  sh 'tar -czvf  myapp-${BUILD_NUMBER}.tgz *'
                   sh 'ls -lrt'
 
             }
         }
         stage('pushing the file to git hub'){
             steps{
-                cleanWs() //clean workspace 
                     script{
                             withCredentials([usernamePassword(credentialsId: 'git-pass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                                 def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                                 sh "git config user.email jenkins@gmail.com"
                                 sh "git config user.name jenkins"
-                                sh "git add myapp:${env.BUILD_NUMBER}.tgz"
+                                sh "git add myapp-${env.BUILD_NUMBER}.tgz"
                                 sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
-                                sh "git push https://${GIT_USERNAME}:${encodedPassword}@git@github.com:comrider/"
+                                sh "git push https://${GIT_USERNAME}:${encodedPassword}@git@github.com:comrider/devops"
                                 
                             }
                     }
