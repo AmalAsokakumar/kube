@@ -1,3 +1,5 @@
+
+# helm install -f <path to values.yaml> <release name> <path to the chart>
 helm install -f values/redis-value.yaml rediscart charts/redis 
 
 helm install -f values/email-service.yaml emailservice charts/microservice 
